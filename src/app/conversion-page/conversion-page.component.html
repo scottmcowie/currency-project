@@ -1,0 +1,23 @@
+<div class="conversion-wrapper">
+    <h2>Conversion</h2>
+    Convert GBP to currency of your choice.<br/>
+    <mat-form-field class="dropdown" appearance="fill">
+        <mat-label>Choose Country Currency</mat-label>
+        <mat-select #conversion [(ngModel)]="countryChoice">
+          <mat-option *ngFor="let countryRate of countryCurrencies" [value]="countryRate.value">
+            {{countryRate.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br/>
+      <mat-form-field class="pounds-input">
+        <mat-label>Amount in GBP</mat-label>
+        <input matInput placeholder="100" [(ngModel)]="amount" (keypress)="numbersOnly($event)">
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" (click)="convert()">Convert</button>
+    
+      <div class="result">
+        <input class="result-display" [(ngModel)]="result" readonly=readonly>
+      </div>
+</div>

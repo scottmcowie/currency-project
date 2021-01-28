@@ -1,0 +1,33 @@
+<div class="audit-wrapper">
+    <h2>Audit</h2>
+
+    <mat-form-field class="dropdown" appearance="fill">
+        <mat-label>Choose Country Currency</mat-label>
+        <mat-select #conversion [(ngModel)]="countryChoice">
+          <mat-option *ngFor="let countryRate of countryCurrencies" [value]="countryRate.value">
+            {{countryRate.value}}
+          </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input matStartDate matInput placeholder="Start date">
+          <input matEndDate matInput placeholder="End date">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="getAudit()">Convert</button>
+    
+
+    <div *ngIf="this.auditService.hasValues()">
+        has values
+        <table>
+
+        </table>
+    </div>
+    
+</div>
