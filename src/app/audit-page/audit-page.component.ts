@@ -27,6 +27,11 @@ export class AuditPageComponent implements OnInit {
   dateFrom: Date;
   results:ConversionAudit[];
 
+  range = new FormGroup({
+    start: new FormControl(),
+    end: new FormControl()
+  });
+
   ngOnInit(): void {
   }
 
