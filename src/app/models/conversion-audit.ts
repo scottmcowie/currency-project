@@ -1,6 +1,8 @@
-export class ConversionAudit{
+import { FormControl } from "@angular/forms";
 
+export class ConversionAudit{
+    country: string;
     rate: number;
-    timestamp:number;
+    timestamp: Date;
 
 }

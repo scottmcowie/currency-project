@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { ConversionAudit } from '../models/conversion-audit';
 import { AuditService } from '../services/audit-service.service';
 
@@ -23,8 +24,6 @@ export class AuditPageComponent implements OnInit {
   ];
   
   countryChoice: string;
-  dateTo: Date;
-  dateFrom: Date;
   results:ConversionAudit[];
 
   range = new FormGroup({
@@ -36,7 +35,12 @@ export class AuditPageComponent implements OnInit {
   }
 
   getAudit(){
-    this.results = this.auditService.getList(this.countryChoice,this.dateTo,this.dateFrom)
-  }
+    console.log("range : ",this.range);
 
+
+    this.results = this.auditService.getList(
+      this.countryChoice,this.range.value.start, this.range.value.end);
+
+    console.log("Results: ", this.results);
+  }
 }

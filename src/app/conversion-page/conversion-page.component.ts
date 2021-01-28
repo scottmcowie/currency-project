@@ -1,5 +1,6 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { ConversionAudit } from '../models/conversion-audit';
 import { AuditService } from '../services/audit-service.service';
 import { ExchangeRateService } from '../services/exchange-rate.service';
@@ -37,16 +38,18 @@ export class ConversionPageComponent implements OnInit {
     if(this.validInputs()){
       console.log("valid input")
       this.exchangeRateService.convert().then(data => {
-          console.log("data: ", data);
-          let rate = data['rates'][this.countryChoice];
           this.result = this.cp.transform(
-            (this.amount*rate),
-            this.countryChoice,'symbol','1.2-2'
-          );
+          this.amount*data['rates'][this.countryChoice],
+            this.countryChoice,'symbol','1.2-2');
 
-          let conversionAudit: ConversionAudit;
-          conversionAudit.rate = rate;
-          conversionAudit.timestamp = Date.now();
+          var conversionAudit: ConversionAudit = new ConversionAudit();
+          conversionAudit.rate = data['rates'][this.countryChoice];
+          
+          var date = new Date();
+          date.setHours(0,0,0);
+          console.log("Date set: ",date);
+          conversionAudit.timestamp = date;
+          conversionAudit.country = this.countryChoice;
           this.auditService.addValue(conversionAudit);
 
         });
