@@ -24,7 +24,9 @@ export class AuditPageComponent implements OnInit {
   ];
   
   countryChoice: string;
+  queriedCurrency: string;
   results:ConversionAudit[];
+  displayResults : boolean = false;
 
   range = new FormGroup({
     start: new FormControl(),
@@ -35,12 +37,22 @@ export class AuditPageComponent implements OnInit {
   }
 
   getAudit(){
-    console.log("range : ",this.range);
-
-
-    this.results = this.auditService.getList(
+    if(this.countryChoice && this.range.value.start && this.range.value.end) {
+      
+      console.log("range : ",this.range);
+      this.results = this.auditService.getList(
       this.countryChoice,this.range.value.start, this.range.value.end);
+      if(this.results.length > 0){
+        this.displayResults = true;
+        this.queriedCurrency = this.countryChoice;
+      }
+    }
+    else{
+      alert("Please choose a country currency and date range.");
+    }
+  }
 
-    console.log("Results: ", this.results);
+  loadTestData(){
+    this.auditService.loadData();
   }
 }

@@ -40,17 +40,12 @@ export class ConversionPageComponent implements OnInit {
       this.exchangeRateService.convert().then(data => {
           this.result = this.cp.transform(
           this.amount*data['rates'][this.countryChoice],
-            this.countryChoice,'symbol','1.2-2');
-
-          var conversionAudit: ConversionAudit = new ConversionAudit();
-          conversionAudit.rate = data['rates'][this.countryChoice];
+          this.countryChoice,'symbol','1.2-2');
           
           var date = new Date();
           date.setHours(0,0,0);
           console.log("Date set: ",date);
-          conversionAudit.timestamp = date;
-          conversionAudit.country = this.countryChoice;
-          this.auditService.addValue(conversionAudit);
+          this.auditService.addValue(new ConversionAudit(this.countryChoice,data['rates'][this.countryChoice],date));
 
         });
     }else {
